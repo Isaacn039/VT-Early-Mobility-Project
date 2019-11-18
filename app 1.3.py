@@ -5,7 +5,7 @@
 
 # This file is the main script for the VT Early Mobility Project Wild Thing unit
 # The script starts the sensors on the head array, reads the input, and controls the functional output commands
-# This file and all others in the VT Early Mobility Project 
+# This file and all others in the VT Early Mobility Project
 
 # Do not change any of the imports
 import RPi.GPIO as PIN
@@ -18,6 +18,12 @@ PIN.setmode(PIN.BOARD)
 
 
 def Main():
+	# This function sets all of the input/output pin numbers, reads sensor input, calculates which sensor is closest to
+	# to the patient's head, and sends commands to the lights corresponding to the three directions
+
+	# pin layout
+	PIN.setmode(PIN.BOARD)
+
 	print("Initializing")
 	# Set the GPIO pins for the sensor output
 	trigLeft = 3
@@ -162,11 +168,15 @@ def Main():
 
 
 def filters(timeSide):
+	# This function takes in the response time obtained for one of the sensors on the head array
+	# this time is then used to calculate the delay, or the amount of time the main function should pause before
+	# triggering the next sensor output
 	timeTot = 10
 	if timeSide > timeTot:
 		delay = 0
 		return delay
 	delay = timeTot - timeSide
 	return delay
+
 
 Main()
